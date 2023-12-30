@@ -20,7 +20,10 @@ const userSchema = new Schema({
     default: false,
   },
   verificationToken: String,
-  profileImage: String,
+  profileImage: {
+    type: String,
+    default: "https://picsum.photos/200",
+  },
   userDescription: {
     type: String,
     default: null,

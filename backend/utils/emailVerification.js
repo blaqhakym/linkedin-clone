@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer'
+
 export const sendVerificationEmail = async (email, token) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -11,7 +13,7 @@ export const sendVerificationEmail = async (email, token) => {
     from: "linkedin@gmail.com",
     to: email,
     subject: "Verification email",
-    text: `Welcome to linkedin-clone! \nClick on the following link to verify your email :https//localhost:3000/verify/${token}`,
+    text: `Welcome to linkedin-clone! \nClick on the following link to verify your email : http://localhost:3000/verify/${token}`,
   };
 
   try {

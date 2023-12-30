@@ -7,17 +7,27 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import {useForm, Controller} from "react-hook-form"
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+
+  const {control, formState:{errors}, handleSubmit } = useForm({
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  })
   const router = useRouter();
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -33,18 +43,19 @@ const login = () => {
 
     checkLoginStatus();
   }, []);
-  const handleLogin = () => {
+
+  const handleLogin = async(data) => {
     const user = {
-      email: email,
-      password: password,
+      email: data.email,
+      password: data.password,
     };
 
-    axios.post("http://localhost:3000/login", user).then((response) => {
-      console.log(response);
+     await axios.post("http://10.0.2.2:3000/login", user).then((response) => {
+      if(response.data.status !== "OK") return Alert.alert(response.data.message)
       const token = response.data.token;
-      AsyncStorage.setItem("authToken", token);
+       AsyncStorage.setItem("authToken", token);
       router.replace("/(tabs)/home");
-    });
+    }).catch(err=>Alert.alert(err.message));
   };
   return (
     <SafeAreaView
@@ -88,18 +99,31 @@ const login = () => {
               size={24}
               color="gray"
             />
-            <TextInput
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              style={{
-                color: "gray",
-                marginVertical: 10,
-                width: 300,
-                fontSize: email ? 18 : 18,
+            <Controller
+              control={control}
+              rules={{
+                required: true,
               }}
-              placeholder="enter your Email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={{
+                    color: "gray",
+                    marginVertical: 10,
+                    width: 300,
+                    fontSize: value ? 18 : 18,
+                  }}
+                  placeholder="enter your email"
+                />
+              )}
+              name="email"
             />
           </View>
+          {errors.email && (
+            <Text style={{ color: "red" }}>email is required.</Text>
+          )}
 
           <View style={{ marginTop: 10 }}>
             <View
@@ -118,19 +142,31 @@ const login = () => {
                 size={24}
                 color="gray"
               />
-              <TextInput
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry={true}
-                style={{
-                  color: "gray",
-                  marginVertical: 10,
-                  width: 300,
-                  fontSize: password ? 18 : 18,
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
                 }}
-                placeholder="enter your Password"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    style={{
+                      color: "gray",
+                      marginVertical: 10,
+                      width: 300,
+                      fontSize: value ? 18 : 18,
+                    }}
+                    placeholder="enter your password"
+                  />
+                )}
+                name="password"
               />
             </View>
+            {errors.password && (
+              <Text style={{ color: "red" }}>password is required.</Text>
+            )}
           </View>
 
           <View
@@ -149,8 +185,8 @@ const login = () => {
 
           <View style={{ marginTop: 80 }} />
 
-          <Pressable
-            onPress={handleLogin}
+          <TouchableOpacity
+            onPress={handleSubmit(handleLogin)}
             style={{
               width: 200,
               backgroundColor: "#0072b1",
@@ -168,7 +204,7 @@ const login = () => {
               }}>
               Login
             </Text>
-          </Pressable>
+          </TouchableOpacity>
 
           <Pressable
             onPress={() => router.replace("/register")}

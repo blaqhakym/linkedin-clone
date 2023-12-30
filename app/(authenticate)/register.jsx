@@ -9,6 +9,7 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import { useForm, Controller } from "react-hook-form";
 import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -18,32 +19,41 @@ import { useRouter } from "expo-router";
 import axios from "axios";
 
 const register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [name, setName] = useState("");
+  // const [image, setImage] = useState("");
   const router = useRouter();
-  const handleRegister = () => {
-    console.log("hello");
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      image: "",
+    },
+  });
+
+  const handleRegister = (data) => {
     const user = {
-      name: name,
-      email: email,
-      password: password,
-      profileImage: image,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      profileImage: data.image,
     };
 
     axios
-      .post("http://localhost:3000/register", user)
+      .post("http://10.0.2.2:3000/register", user)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         Alert.alert(
           "Registration successful",
           "You have been registered successfully"
         );
-        setName("");
-        setEmail("");
-        setPassword("");
-        setImage("");
+        router.push("/(authenticate)/login");
       })
       .catch((error) => {
         Alert.alert(
@@ -95,18 +105,31 @@ const register = () => {
               color="gray"
               style={{ marginLeft: 8 }}
             />
-            <TextInput
-              value={name}
-              onChangeText={(text) => setName(text)}
-              style={{
-                color: "gray",
-                marginVertical: 10,
-                width: 300,
-                fontSize: name ? 18 : 18,
+            <Controller
+              control={control}
+              rules={{
+                required: true,
               }}
-              placeholder="enter your name"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={{
+                    color: "gray",
+                    marginVertical: 10,
+                    width: 300,
+                    fontSize: value ? 18 : 18,
+                  }}
+                  placeholder="enter your name"
+                />
+              )}
+              name="name"
             />
           </View>
+          {errors.name && (
+            <Text style={{ color: "red" }}>This is required.</Text>
+          )}
 
           <View
             style={{
@@ -124,18 +147,31 @@ const register = () => {
               size={24}
               color="gray"
             />
-            <TextInput
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              style={{
-                color: "gray",
-                marginVertical: 10,
-                width: 300,
-                fontSize: email ? 18 : 18,
+            <Controller
+              control={control}
+              rules={{
+                required: true,
               }}
-              placeholder="enter your Email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={{
+                    color: "gray",
+                    marginVertical: 10,
+                    width: 300,
+                    fontSize: value ? 18 : 18,
+                  }}
+                  placeholder="enter your email"
+                />
+              )}
+              name="email"
             />
           </View>
+          {errors.email && (
+            <Text style={{ color: "red" }}>This is required.</Text>
+          )}
 
           <View
             style={{
@@ -153,19 +189,31 @@ const register = () => {
               size={24}
               color="gray"
             />
-            <TextInput
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}
-              style={{
-                color: "gray",
-                marginVertical: 10,
-                width: 300,
-                fontSize: password ? 18 : 18,
+            <Controller
+              control={control}
+              rules={{
+                required: true,
               }}
-              placeholder="enter your Password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={{
+                    color: "gray",
+                    marginVertical: 10,
+                    width: 300,
+                    fontSize: value ? 18 : 18,
+                  }}
+                  placeholder="enter your password"
+                />
+              )}
+              name="password"
             />
           </View>
+          {errors.password && (
+            <Text style={{ color: "red" }}>This is required.</Text>
+          )}
 
           <View
             style={{
@@ -183,19 +231,31 @@ const register = () => {
               color="gray"
               style={{ marginLeft: 8 }}
             />
-            <TextInput
-              value={image}
-              onChangeText={(text) => setImage(text)}
-              style={{
-                color: "gray",
-                marginVertical: 10,
-                width: 300,
-                fontSize: image ? 18 : 18,
-              }}
-              placeholder="enter your image url"
+            <Controller
+              control={control}
+              // rules={{
+              //   required: true,
+              // }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={{
+                    color: "gray",
+                    marginVertical: 10,
+                    width: 300,
+                    fontSize: value ? 18 : 18,
+                  }}
+                  placeholder="enter your image"
+                />
+              )}
+              name="image"
             />
           </View>
-
+          {errors.image && (
+            <Text style={{ color: "red" }}>This is required.</Text>
+          )}
           <View
             style={{
               marginTop: 12,
@@ -213,7 +273,7 @@ const register = () => {
           <View style={{ marginTop: 80 }} />
 
           <Pressable
-            onPress={handleRegister}
+            onPress={handleSubmit(handleRegister)}
             style={{
               width: 200,
               backgroundColor: "#0072b1",

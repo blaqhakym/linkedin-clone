@@ -19,3 +19,13 @@ export const createPost = expressAsyncHandler(async (req, res) => {
 
   res.status(201).json({ status: "created", post: newPost });
 });
+
+export const fetchPosts = expressAsyncHandler(async (req, res) => {
+  await Post.find().exec((err, posts) => {
+    if (err) {
+      return res.json("There was an error fetching posts").status(err.status);
+    } else {
+      return res.status(200).json({ status: "OK", posts });
+    }
+  });
+});

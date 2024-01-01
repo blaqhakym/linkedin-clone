@@ -55,11 +55,10 @@ app.use('/connections/:userId', connectionsRoute)
 
 
 // todo: 
-// endpoint to create a post
-app.use('/create', createRoute)
+// endpoint to create a post, fetch all posts
+app.use('/posts', createRoute)
 
-// // endpoint to fetch all the posts
-// app.use('posts')
+
 
 // // endpoint to like a post
 // app.use('like-post/:postId')

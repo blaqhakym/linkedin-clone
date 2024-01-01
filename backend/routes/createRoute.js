@@ -1,8 +1,7 @@
-import express from 'express'
-import { createPost } from '../controllers/createPostController.js'
+import express from "express";
+import { createPost, fetchPosts } from "../controllers/createPostController.js";
 
-const router = express()
+const router = express();
 
-
-router.post('/', createPost)
-export default router
+router.post("/create", createPost).get("/", fetchPosts);
+export default router;

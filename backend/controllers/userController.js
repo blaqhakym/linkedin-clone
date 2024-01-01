@@ -26,8 +26,19 @@ export const getUsers = expressAsyncHandler(async (req, res) => {
   const unconnectedTo = await User.find({
     _id: { $ne: user._id, $nin: connections },
   });
-if(!unconnectedTo.length >0)  return res.json({ status: "OK", data: "No unconnected users" }).status(200);
-  return res
-    .json({status: "OK", data: unconnectedTo })
-    .status(200);
+  if (!unconnectedTo.length > 0)
+    return res.json({ status: "OK", data: "No unconnected users" }).status(200);
+  return res.json({ status: "OK", data: unconnectedTo }).status(200);
+});
+
+export const patchDescription = expressAsyncHandler(async (req, res) => {
+  const { userDescription } = req.body;
+  const userId = req.params.userId;
+
+await User.findByIdAndUpdate(userId, {
+    userDescription,
+  }).exec((err, result) => {
+    if (err) return res.json("error: user not found");
+    return res.json("user description updated").status(200);
+  });
 });

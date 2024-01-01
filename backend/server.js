@@ -18,7 +18,7 @@ import connectionRequestRoute from "./routes/connectionRequests.js";
 import acceptRequest from "./routes/acceptRequest.js";
 import connectionRequestsRoute from './routes/connectionRequests.js'
 import createRoute from './routes/createRoute.js';
-
+import likeRoute from './routes/likeRoute.js'
 
 dotenv.config()
 
@@ -59,12 +59,9 @@ app.use('/connections/:userId', connectionsRoute)
 app.use('/posts', createRoute)
 
 
+// endpoint to like a post
+app.use('like/:postId/:userId', likeRoute)
 
-// // endpoint to like a post
-// app.use('like-post/:postId')
-
-// // endpoint to update user description
-// app.use('profile/:userId')
 
 
 mongoose.connection.once("open", () => {

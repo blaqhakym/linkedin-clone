@@ -58,14 +58,14 @@ app.use('/connections/:userId', connectionsRoute)
 // endpoint to create a post
 app.use('/create', createRoute)
 
-// endpoint to fetch all the posts
-app.use('posts')
+// // endpoint to fetch all the posts
+// app.use('posts')
 
-// endpoint to like a post
-app.use('like-post/:postId')
+// // endpoint to like a post
+// app.use('like-post/:postId')
 
-// endpoint to update user description
-app.use('profile/:userId')
+// // endpoint to update user description
+// app.use('profile/:userId')
 
 
 mongoose.connection.once("open", () => {

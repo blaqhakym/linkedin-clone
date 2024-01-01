@@ -1,8 +1,8 @@
 import express from 'express'
 import { createPost } from '../controllers/createPostController.js'
 
-export default router = express()
+const router = express()
 
 
 router.post('/', createPost)
-// export default router
+export default router

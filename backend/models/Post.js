@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 
-const postSchema = new Schema = ({
+const postSchema = new Schema({
   description: String,
   imageUrl: String,
 

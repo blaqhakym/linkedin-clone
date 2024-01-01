@@ -104,7 +104,7 @@ const network = () => {
         style={{ borderColor: "#E0E0E0", borderWidth: 2, marginVertical: 10 }}
       />
 
-      {/* <View>
+      <View>
         {connectionRequests?.map((item, index) => (
           <ConnectionRequest
             item={item}
@@ -114,7 +114,7 @@ const network = () => {
             userId={userId}
           />
         ))}
-      </View> */}
+      </View>
 
       <View style={{ marginHorizontal: 15 }}>
         <View

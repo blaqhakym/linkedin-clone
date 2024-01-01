@@ -13,6 +13,10 @@ import verifyEmail from './routes/verifyEmail.js'
 import login from './routes/login.js'
 import userProfile from "./routes/userProfile.js";
 import users from "./routes/users.js";
+import connectionsRoute from './routes/connections.js'
+import connectionRequestRoute from "./routes/connectionRequests.js";
+import acceptRequest from "./routes/acceptRequest.js";
+import connectionRequestsRoute from './routes/connectionRequests.js'
 
 
 dotenv.config()
@@ -29,9 +33,39 @@ const PORT = process.env.PORT
 app.use('/register', register)
 app.use('/verify', verifyEmail)
 app.use('/login', login)
+
 // endpoint to get the user's profile
 app.use("/profile", userProfile);
+
+// get all users
 app.use("/users", users);
+
+// send a connection request
+app.use("/connection-request", connectionRequestRoute);
+
+//show all connctions requests
+app.use("/connection-request/:userId", connectionRequestsRoute);
+
+//accept connection request
+app.use('/connection-request/accept', acceptRequest);
+
+// fetch all connections of a user
+app.use('/connections/:userId', connectionsRoute)
+
+
+// todo: 
+// endpoint to create a post
+app.use('/create')
+
+// endpoint to fetch all the posts
+app.use('posts')
+
+// endpoint to like a post
+app.use('like-post/:postId')
+
+// endpoint to update user description
+app.use('profile/:userId')
+
 
 mongoose.connection.once("open", () => {
   console.log("database connected");

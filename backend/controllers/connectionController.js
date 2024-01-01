@@ -1,6 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/User.js";
-import { connection } from "mongoose";
 
 export const getConnections = expressAsyncHandler(async (req, res) => {
   const userId = req.params.userId;

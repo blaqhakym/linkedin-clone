@@ -17,6 +17,7 @@ import connectionsRoute from './routes/connections.js'
 import connectionRequestRoute from "./routes/connectionRequests.js";
 import acceptRequest from "./routes/acceptRequest.js";
 import connectionRequestsRoute from './routes/connectionRequests.js'
+import createRoute from './routes/createRoute.js';
 
 
 dotenv.config()
@@ -55,7 +56,7 @@ app.use('/connections/:userId', connectionsRoute)
 
 // todo: 
 // endpoint to create a post
-app.use('/create')
+app.use('/create', createRoute)
 
 // endpoint to fetch all the posts
 app.use('posts')

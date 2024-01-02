@@ -20,3 +20,4 @@ export const postLike = expressAsyncHandler(async (req, res) => {
     return res.json("Post liked");
   }
 });
+

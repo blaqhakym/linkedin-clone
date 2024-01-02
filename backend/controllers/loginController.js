@@ -7,7 +7,7 @@ import bcryptjs from 'bcryptjs'
 
 
 
-const loginController = expressAsyncHandler(async (req, res) => {
+export const loginUser = expressAsyncHandler(async (req, res) => {
   const { email, password } = req.body
   
   const findUser = await User.findOne({ email })
@@ -35,5 +35,3 @@ const generateSecretKey = () => {
 
 const secretKey = generateSecretKey()
 
-
-export default loginController

@@ -6,7 +6,6 @@ export const getConnections = expressAsyncHandler(async (req, res) => {
 
   const user = await User.findById(userId)
     .populate("connections", "name createdAt profileImage")
-    .exec();
   if (!user) return res.status(400).json("User not found");
   const connections = user.connections;
   connections.length === 0

@@ -31,21 +31,21 @@ app.use(cors())
 const PORT = process.env.PORT
 
 
-app.use('/register', register)
-app.use('/verify', verifyEmail)
-app.use('/login', login)
+// app.use('/register', register)
+// app.use('/verify', verifyEmail)
+// app.use('/login', login)
 
-// endpoint to get the user's profile
-app.use("/profile", userProfile);
+// // endpoint to get the user's profile
+// app.use("/profile", userProfile);
 
 // get all users
 app.use("/users", users);
 
 // send a connection request
-app.use("/connection-request", connectionRequestRoute);
+app.use("/connections", connectionsRequestRoute);
 
 //show all connctions requests
-app.use("/connection-request/:userId", connectionRequestsRoute);
+app.use("/connections/all/:userId", connectionRequestsRoute);
 
 //accept connection request
 app.use('/connection-request/accept', acceptRequest);
@@ -54,12 +54,11 @@ app.use('/connection-request/accept', acceptRequest);
 app.use('/connections/:userId', connectionsRoute)
 
 
-// todo: 
 // endpoint to create a post, fetch all posts
 app.use('/posts', createRoute)
 
 
-// endpoint to like a post
+// endpoint to like or unlike a post
 app.use('like/:postId/:userId', likeRoute)
 
 

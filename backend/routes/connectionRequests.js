@@ -1,8 +1,9 @@
 import express from "express";
-import { connectionRequest } from "../controllers/connectionRequestController.js";
+import { fetchAllRequests, sendConnection } from "../controllers/connectionRequestController.js";
+
 
 const router = express();
 
-router.post("/", connectionRequest);
+router.route('/').post("/request", sendConnection).get('/all', fetchAllRequests);
 
 export default router;

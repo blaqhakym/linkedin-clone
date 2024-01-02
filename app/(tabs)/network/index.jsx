@@ -15,6 +15,7 @@ const network = () => {
   const [userId, setUserId] = useState("");
   const [user, setUser] = useState();
   const [users, setUsers] = useState([]);
+  const [connectionRequests, setConnectionRequests] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // ger userId stored inside jwt token stored in local storage so as to fetch user and users
@@ -67,6 +68,18 @@ const network = () => {
     };
     if (userId) fetchUsers();
   }, [userId]);
+
+
+  //fetch connection requests
+  useEffect(() => {
+    const fetchConnectionRequests = () => {
+  const request = axios.get(`http://10.0.2.2:300//connection-request/:${userId}`);
+}
+
+    fetchConnectionRequests()
+  }, [userId])
+  
+  
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <Pressable

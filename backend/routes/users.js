@@ -1,13 +1,16 @@
 import { Router } from "express";
 
 const router = Router();
-import { getUser, getUsers, patchDescription } from "../controllers/userController.js";
+import {
+  getUser,
+  getUsers,
+  patchDescription,
+} from "../controllers/userController.js";
 import registerUser from "../controllers/registerController.js";
 import emailVerification from "../controllers/emailVerificationController.js";
 import { loginUser } from "../controllers/loginController.js";
 
 router
-  .route("/")
   .get(":userId", getUsers)
   .post("register", registerUser)
   .patch(":token", emailVerification)

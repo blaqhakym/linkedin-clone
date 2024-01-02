@@ -2,7 +2,7 @@ import expressAsyncHandler from "express-async-handler";
 import User from "../models/User.js";
 
 export const getConnections = expressAsyncHandler(async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.body;
 
   const user = await User.findById(userId)
     .populate("connections", "name createdAt profileImage")

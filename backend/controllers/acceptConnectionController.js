@@ -12,8 +12,8 @@ export const acceptConnection = expressAsyncHandler(async (req, res) => {
     $pull: { connectionRequests: userId },
   });
 
-  addToConnectedUsers.save()
-  addUserToRequestConnectedUsers.save();
+  // addToConnectedUsers.save()
+  // addUserToRequestConnectedUsers.save();
 
 res.json("user request accepted").status(200)
 });

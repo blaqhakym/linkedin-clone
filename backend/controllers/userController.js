@@ -78,8 +78,8 @@ export const loginUser = expressAsyncHandler(async (req, res) => {
       .json({ status: "unauthorised", message: "password is not correct" })
       .status(401);
 
-  if (!findUser.verified)
-    return res.json("Please verify your email to login").status(400);
+  // if (!findUser.verified)
+  //   return res.json("Please verify your email to login").status(400);
 
   const token = jwt.sign({ userId: findUser._id }, secretKey);
 

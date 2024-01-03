@@ -67,7 +67,7 @@ export const loginUser = expressAsyncHandler(async (req, res) => {
       .json({
         status: "unauthorised",
         message:
-          "user does not exist",
+          "user does not exist. Sign up first",
       })
       .status(401);  
 

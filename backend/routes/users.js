@@ -7,10 +7,10 @@ import {
   getUsers,
   patchDescription,
   registerUser,
+  loginUser
 } from "../controllers/userController.js";
 
 
-import { loginUser } from "../controllers/loginController.js";
 
 router
   .get("/:userId", getUsers)//users not connected

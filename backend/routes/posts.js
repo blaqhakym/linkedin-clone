@@ -5,7 +5,7 @@ import {
 } from "../controllers/createPostController.js";
 import { postLike } from "../controllers/likePostController.js";
 
-const router = express();
+const router = express.Router();
 
 router
   .get("/", fetchAllPosts)

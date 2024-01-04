@@ -1,6 +1,6 @@
-import { Router } from "express";
+import express from "express";
 
-const router = Router();
+const router = express.Router();
 import {
   emailVerification,
   getUser,
@@ -9,17 +9,19 @@ import {
   registerUser,
   loginUser
 } from "../controllers/userController.js";
+import verifyJwt from "../utils/verifyJwt.js";
 
 
-
+//('/users/')
 router
-  .get("/:userId", getUsers)//users not connected
-  .post("/register", registerUser)//register a user
+  .get("/:userId", getUsers) //users not connected
+  .post("/register", registerUser) //register a user
   .get("/verify/:token", emailVerification) //send email verification
-  .post("/login", loginUser);//login 
+  .post("/login", loginUser);//login
 
-router.route("profile/:userId")
-  .get(getUser)//get a user profile
+ 
+router.route("/profile/:userId")
+  .get(verifyJwt,getUser)//get a user profile
   .patch(patchDescription);//update session user's description
 
 

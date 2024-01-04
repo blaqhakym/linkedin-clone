@@ -6,7 +6,7 @@ import {
 } from "../controllers/connectionRequestController.js";
 import { acceptConnection } from "../controllers/acceptConnectionController.js";
 
-const router = express();
+const router = express.Router();
 
 router.get("all", getConnections).patch("accept", acceptConnection);
 

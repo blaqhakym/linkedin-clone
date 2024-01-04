@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { sendVerificationEmail } from "../utils/emailVerification.js";
 import crypto from "crypto";
 import bcryptjs from "bcryptjs";
+import jwt from 'jsonwebtoken'
 
 //register a user
 export const registerUser = expressAsyncHandler(async (req, res) => {
@@ -81,17 +82,12 @@ export const loginUser = expressAsyncHandler(async (req, res) => {
   // if (!findUser.verified)
   //   return res.json("Please verify your email to login").status(400);
 
-  const token = jwt.sign({ userId: findUser._id }, secretKey);
+  const token = jwt.sign({ email: findUser.email}, process.env.JWT_SECRET, {expiresIn: 60*60*1000});
 
-  return res.json({ status: "OK", token }).status(200);
+  return res.json({ message: `You are logged in as \n${findUser.name}`, token }).status(200);
 });
 
-const generateSecretKey = () => {
-  const secretKey = crypto.randomBytes(32).toString("hex");
 
-  return secretKey;
-};
-const secretKey = generateSecretKey();
 
 //get a user's profile
 export const getUser = expressAsyncHandler(async (req, res) => {

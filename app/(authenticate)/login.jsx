@@ -50,8 +50,9 @@ const login = () => {
       password: data.password,
     };
 
-     await axios.post("http://10.0.2.2:3000/login", user).then((response) => {
-      if(response.data.status !== "OK") return Alert.alert(response.data.message)
+     await axios.post("http://10.0.2.2:3000/users/login", user).then((response) => {
+       if (response.status !== 200) return Alert.alert(response.data.message)
+       Alert.alert(response.data.message)
       const token = response.data.token;
        AsyncStorage.setItem("authToken", token);
       router.replace("/(tabs)/home");

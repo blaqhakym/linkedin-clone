@@ -10,23 +10,24 @@ import React, { useState } from "react";
 
 const UserProfile = ({ item, userId }) => {
   const [connectionSent, setConnectionSent] = useState(false);
-  // const sendConnectionRequest = async (currentUserId, selectedUserId) => {
-  //   try {
-  //     const response = await fetch("http://localhost:3000/connection-request", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ currentUserId, selectedUserId }),
-  //     });
+  
+  const sendConnectionRequest = async (currentUserId, selectedUserId) => {
+    try {
+      const response = await fetch("http://10.0.2.2:3000/connections/requests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ currentUserId, selectedUserId }),
+      });
 
-  //     if (response.ok) {
-  //       setConnectionSent(true);
-  //     }
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+      if (response.ok) {
+        setConnectionSent(true);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <View
       style={{
@@ -61,8 +62,8 @@ const UserProfile = ({ item, userId }) => {
         </Text>
       </View>
 
-      {/* <Pressable
-        onPress={() => sendConnectionRequest(userId, item._id)}
+      <Pressable
+        onPress={() => sendConnectionRequest(userId, item.id)}
         style={{
           marginLeft: "auto",
           marginRight: "auto",
@@ -75,8 +76,10 @@ const UserProfile = ({ item, userId }) => {
           marginTop: 7,
           paddingHorizontal: 15,
           paddingVertical: 4,
-        }}> */}
-        {/* <Text
+        }}
+        disabled={connectionSent || item?.connectionRequests?.includes(userId)? true: false}
+      >
+        <Text
           style={{
             fontWeight: "600",
             color:
@@ -88,7 +91,7 @@ const UserProfile = ({ item, userId }) => {
             ? "Pending"
             : "Connect"}
         </Text>
-      </Pressable> */}
+      </Pressable>
     </View>
   );
 };

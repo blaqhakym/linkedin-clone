@@ -10,5 +10,5 @@ const router = express.Router();
 
 router.get("all", getConnections).patch("accept", acceptConnection);
 
-router.route("/requests").get(fetchAllRequests).post(sendConnection);
+router.route("/requests").get(fetchAllRequests).post(sendConnection);//fetch all request & send connection request
 export default router;

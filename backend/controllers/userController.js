@@ -122,7 +122,13 @@ export const getUsers = expressAsyncHandler(async (req, res) => {
   if (!unconnectedTo.length > 0) {
     return res.json({ status: "OK", data: "No unconnected users" }).status(200)
   }
-  return res.json({ status: "OK", data: unconnectedTo }).status(200);
+
+  const data = unconnectedTo.map(u => {
+    return { id: u._id, name: u.name, email: u.email, image: u.profileImage, connectionRequests: u.connectionRequests}
+  })
+
+
+  return res.json({ status: "OK", data }).status(200);
 });
 
 export const patchDescription = expressAsyncHandler(async (req, res) => {

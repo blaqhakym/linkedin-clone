@@ -84,7 +84,7 @@ const network = () => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <Pressable
-        onPress={() => router.push("/network/connections")}
+        onPress={() => router.push("(tabs)/network/connections")}
         style={{
           marginTop: 10,
           marginHorizontal: 10,
@@ -159,11 +159,12 @@ const network = () => {
           </Text>
         </View>
       </View>
-    {typeof users === "string"? <Text>{users}</Text>:<FlatList
+      {typeof users === "string" ? <Text>{users}</Text>
+        : <FlatList
       data={users}
       columnWrapperStyle={{ justifyContent: "space-between" }}
       numColumns={2}
-        keyExtractor={(item) => item._id}
+      keyExtractor={(item) => item.id}
       renderItem={({ item, index }) => (
         <UserProfile userId={userId} item={item} key={index} />
       )}

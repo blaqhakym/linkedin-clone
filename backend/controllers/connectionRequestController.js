@@ -1,16 +1,17 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/User.js";
 
+// /users/request
 export const sendConnection = expressAsyncHandler(async(req, res)=> {
-  const {requestedUserId, userId} = req.body;
+  const {currentUserId, selectedUserId, } = req.body;
 
-  // add userId to requested user 
-  const addToRequestedUser = await User.findByIdAndUpdate(requestedUserId, {$push:{connectionRequests: userId}})
+  // add currentUserId to requested user 
+  const addToRequestedUser = await User.findByIdAndUpdate(selectedUserId, {$push:{connectionRequests: currentUserId}})
 
-  //add requestedUserId to user's sent requests list
-  await User.findByIdAndUpdate(userId, { $push: { sentConnectionRequests: requestedUserId } })
+  //add selectedUserId to user's sent requests list
+  await User.findByIdAndUpdate(currentUserId, { $push: { sentConnectionRequests: selectedUserId } })
   
-  res.json({message: 'request sent', status: 'OK'}).status(200)
+  res.json({message: 'Request sent', status: 'OK'}).status(200)
 })
 
 export const fetchAllRequests = expressAsyncHandler(async (req, res) => {

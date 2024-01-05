@@ -38,7 +38,7 @@ const network = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await axios.get(`http://10.0.2.2:3000/profile/${userId}`);
+        const res = await axios.get(`http://10.0.2.2:3000/users/profile/${userId}`);
         const userData = await res.data.user;
         setUser(userData);
       } catch (err) {
@@ -159,7 +159,7 @@ const network = () => {
           </Text>
         </View>
       </View>
-    {typeof users === "string"? <Text>There are no users</Text>:<FlatList
+    {typeof users === "string"? <Text>{users}</Text>:<FlatList
       data={users}
       columnWrapperStyle={{ justifyContent: "space-between" }}
       numColumns={2}

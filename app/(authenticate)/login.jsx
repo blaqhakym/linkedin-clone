@@ -17,13 +17,9 @@ import { useRouter } from "expo-router";
 import {useForm, Controller} from "react-hook-form"
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useUser } from "../../userContext";
 
 const login = () => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-const {setUser}= useUser()
-  const {control, formState:{errors}, handleSubmit } = useForm({
+const { control, formState: { errors }, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: ""
@@ -56,7 +52,6 @@ const {setUser}= useUser()
        Alert.alert(response.data.message)
       const token = response.data.token;
        AsyncStorage.setItem("authToken", token);
-       setUser(response.data.userDetail)
       router.replace("/(tabs)/home");
     }).catch(err=>Alert.alert(err.message));
   };

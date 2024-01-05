@@ -116,10 +116,12 @@ export const getUsers = expressAsyncHandler(async (req, res) => {
 
   // get users not connected
   const unconnectedTo = await User.find({
-    _id: { $ne: userId, connections: { $nin: [userId] } },
-  });
-  if (!unconnectedTo.length > 0)
-    return res.json({ status: "OK", data: "No unconnected users" }).status(200);
+    _id: { $ne: userId },
+   connections:{ $nin: [userId] } }
+  );
+  if (!unconnectedTo.length > 0) {
+    return res.json({ status: "OK", data: "No unconnected users" }).status(200)
+  }
   return res.json({ status: "OK", data: unconnectedTo }).status(200);
 });
 

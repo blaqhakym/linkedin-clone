@@ -82,9 +82,14 @@ export const loginUser = expressAsyncHandler(async (req, res) => {
   // if (!findUser.verified)
   //   return res.json("Please verify your email to login").status(400);
 
-  const token = jwt.sign({ email: findUser.email}, process.env.JWT_SECRET, {expiresIn: 60*60*1000});
+  const token = jwt.sign({ email: findUser.email, userId: findUser._id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 1000 });
+  const userDetail = {
+    name: findUser.name,
+    email: findUser.email,
+    image: findUser.profileImage
+  }
 
-  return res.json({ message: `You are logged in as \n${findUser.name}`, token }).status(200);
+  return res.json({ message: `You are logged in as \n${findUser.name}`, token, userDetail }).status(200);
 });
 
 

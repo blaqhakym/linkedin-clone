@@ -1,10 +1,13 @@
 import { View, Text, Pressable } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { useUser } from "../../../userContext";
 
 const index = () => {
+  // const {user } = useUser()
   const router = useRouter();
+// console.log(user.email)
   return (
     <View>
       <Text>na tab index be this</Text>

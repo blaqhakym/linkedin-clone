@@ -73,7 +73,8 @@ const network = () => {
   //fetch connection requests
   useEffect(() => {
     const fetchConnectionRequests = () => {
-  const request = axios.get(`http://10.0.2.2:300//connection-request/:${userId}`);
+      const request = axios.get(`http://10.0.2.2:300//connection-request/:${userId}`, {
+  });
 }
 
     fetchConnectionRequests()

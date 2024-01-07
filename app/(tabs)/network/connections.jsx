@@ -1,11 +1,12 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import jwt_decode from "jwt-decode";
+import  { jwtDecode } from "jwt-decode";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import axios from "axios";
 import moment from "moment";
+import { router } from "expo-router";
 const connections = () => {
   const [connections, setConnections] = useState([]);
 
@@ -13,7 +14,7 @@ const connections = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const token = await AsyncStorage.getItem("authToken");
-      const decodedToken = jwt_decode(token);
+      const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
       setUserId(userId);
     };
@@ -29,16 +30,20 @@ const connections = () => {
 
   const fetchConnections = async () => {
     try {
+      const token = AsyncStorage.getItem("authToken")
       const response = await axios.get(
-        `http://localhost:3000/connections/${userId}`
+        `http://10.0.2.2:3000/connections/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
-      setConnections(response.data.connections);
+      setConnections(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(connections);
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <View
@@ -49,9 +54,12 @@ const connections = () => {
           marginHorizontal: 12,
           marginTop: 10,
         }}>
+        <Pressable
+        onPress={()=>router.push('/network')}
+        >
         <Text style={{ fontWeight: "500" }}>
-          {connections?.length} Connections
-        </Text>
+          {typeof connections === 'string'? 0 : connections?.length} Connection(s)
+        </Text></Pressable>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <AntDesign name="search1" size={22} color="black" />
           <Octicons name="three-bars" size={22} color="black" />
@@ -68,7 +76,8 @@ const connections = () => {
       />
 
       <View style={{ marginHorizontal: 10, marginTop: 10 }}>
-        {connections?.map((item, index) => (
+        {typeof connections === 'string' ? <Text>{connections}</Text> : connections?.map((item, index) => (
+        
           <View
             style={{
               flexDirection: "row",

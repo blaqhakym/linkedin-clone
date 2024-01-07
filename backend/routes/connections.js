@@ -8,9 +8,9 @@ import { acceptConnection } from "../controllers/acceptConnectionController.js";
 
 const router = express.Router();
 router
+  .get("/:userId", getConnections)
   .get("/requests/:userId", fetchAllRequests)
   .post("/requests", sendConnection)
-  .get("/all", getConnections)
   .patch("/accept", acceptConnection);
 
 export default router;

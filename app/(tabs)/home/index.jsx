@@ -150,6 +150,7 @@ const index = () => {
                   source={{ uri: item?.user?.profileImage }}
                 />
 
+                
                 <View style={{ flexDirection: "column", gap: 2 }}>
                   <Text style={{ fontSize: 15, fontWeight: "600" }}>
                     {item?.user?.name}

@@ -91,7 +91,7 @@ const network = () => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <Pressable
-        onPress={() => router.push("(tabs)/network/connections")}
+        onPress={() => router.push("/network/connections")}
         style={{
           marginTop: 10,
           marginHorizontal: 10,

@@ -46,7 +46,7 @@ const register = () => {
     };
 
     axios
-      .post("http://10.0.2.2:3000/register", user)
+      .post("http://10.0.2.2:3000/users/register", user)
       .then((response) => {
         console.log(response.data);
         Alert.alert(

@@ -1,7 +1,7 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/User.js";
 
-// /users/request
+// /users/requests
 export const sendConnection = expressAsyncHandler(async(req, res)=> {
   const {currentUserId, selectedUserId, } = req.body;
 
@@ -15,7 +15,7 @@ export const sendConnection = expressAsyncHandler(async(req, res)=> {
 })
 
 export const fetchAllRequests = expressAsyncHandler(async (req, res) => {
-  const userId = req.body;
+  const userId = req.params.userId;
 
   const findUserRequests = await User.findById(userId).populate(
     "connectionRequests",
@@ -23,6 +23,5 @@ export const fetchAllRequests = expressAsyncHandler(async (req, res) => {
   );
 
   const connectionRequests = findUserRequests.connectionRequests;
-
-  res.json({ requests: connectionRequests, status: "OK" }).status(200);
+  res.json({ requests: connectionRequests, status: "successful" }).status(200);
 });

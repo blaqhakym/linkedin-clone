@@ -1,4 +1,4 @@
-import { View, Text, Pressable, FlatList} from "react-native";
+import { View, Text, Pressable, FlatList, SectionListComponent, Alert} from "react-native";
 import { ScrollView,  } from "react-native-virtualized-view";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
@@ -8,7 +8,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import UserProfile from "../../../components/userProfile";
+import UserProfile from "../../../components/UserProfile";
+import ConnectionRequest from "../../../components/connectionRequest";
 
 const network = () => {
   const router = useRouter();
@@ -72,13 +73,25 @@ const network = () => {
 
   //fetch connection requests
   useEffect(() => {
-    const fetchConnectionRequests = () => {
-      const request = axios.get(`http://10.0.2.2:300//connection-request/:${userId}`, {
-  });
-}
+    if (userId) {
+      fetchConnectionRequests();
+    }
+  }, [userId]);
 
-    fetchConnectionRequests()
-  }, [userId])
+  const fetchConnectionRequests = async () => {
+  
+     await axios.get(
+        `http://10.0.2.2:3000/connections/requests/${userId}`, 
+     ).then(({data}) => {
+  
+       setConnectionRequests(data.requests)
+       
+        console.log(data.status)
+      }).catch(err=>console.log(err))  
+  };
+  console.log(connectionRequests);
+
+ 
   
   
   return (
@@ -117,19 +130,19 @@ const network = () => {
       <View
         style={{ borderColor: "#E0E0E0", borderWidth: 2, marginVertical: 10 }}
       />
-
+<Text>Hello</Text>
       <View>
         {connectionRequests?.map((item, index) => (
           <ConnectionRequest
             item={item}
             key={index}
-            connectionRequests={connectionRequests}
+            connectionRequest={connectionRequests}
             setConnectionRequests={setConnectionRequests}
             userId={userId}
           />
         ))}
       </View>
-
+<Text>Hello</Text>
       <View style={{ marginHorizontal: 15 }}>
         <View
           style={{

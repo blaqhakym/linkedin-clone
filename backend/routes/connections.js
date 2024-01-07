@@ -7,8 +7,10 @@ import {
 import { acceptConnection } from "../controllers/acceptConnectionController.js";
 
 const router = express.Router();
+router
+  .get("/requests/:userId", fetchAllRequests)
+  .post("/requests", sendConnection)
+  .get("/all", getConnections)
+  .patch("/accept", acceptConnection);
 
-router.get("all", getConnections).patch("accept", acceptConnection);
-
-router.route("/requests").get(fetchAllRequests).post(sendConnection);//fetch all request & send connection request
 export default router;

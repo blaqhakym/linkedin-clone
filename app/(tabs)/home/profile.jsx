@@ -178,7 +178,7 @@ const profile = () => {
           Youtube • Linkedin Member
         </Text>
         <Text style={{ fontSize: 15, color: "gray" }}>
-          Bengaluru, Karnataka, India
+          Ikeja, Lagos, Nigeria
         </Text>
       </View>
 

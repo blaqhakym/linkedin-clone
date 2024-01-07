@@ -9,7 +9,7 @@ import { Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import UserProfile from "../../../components/UserProfile";
-import ConnectionRequest from "../../../components/connectionRequest";
+import ConnectionRequest from "../../../components/ConnectionRequest";
 
 const network = () => {
   const router = useRouter();
@@ -79,20 +79,14 @@ const network = () => {
   }, [userId]);
 
   const fetchConnectionRequests = async () => {
-  
      await axios.get(
         `http://10.0.2.2:3000/connections/requests/${userId}`, 
      ).then(({data}) => {
-  
        setConnectionRequests(data.requests)
-       
-        console.log(data.status)
       }).catch(err=>console.log(err))  
   };
-  console.log(connectionRequests);
 
  
-  
   
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
@@ -130,7 +124,7 @@ const network = () => {
       <View
         style={{ borderColor: "#E0E0E0", borderWidth: 2, marginVertical: 10 }}
       />
-<Text>Hello</Text>
+
       <View>
         {connectionRequests?.map((item, index) => (
           <ConnectionRequest
@@ -142,7 +136,7 @@ const network = () => {
           />
         ))}
       </View>
-<Text>Hello</Text>
+
       <View style={{ marginHorizontal: 15 }}>
         <View
           style={{

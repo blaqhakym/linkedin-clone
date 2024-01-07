@@ -1,15 +1,15 @@
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/User.js";
 
-export const acceptConnection = expressAsyncHandler(async (req, res) => {
-  const { userId, acceptedUserId } = req.body
-  
 
-  const addToConnectedUsers = await User.findByIdAndUpdate(userId, { $push: { connections: acceptedUserId }, $pull: { connectionRequests: acceptedUserId } })
+// "/connections/accept"
+export const acceptConnection = expressAsyncHandler(async (req, res) => {
+  const { userId, requestId } = req.body
+ await User.findByIdAndUpdate(userId, { $push: { connections: requestId }, $pull: { connectionRequests: requestId } })
   
-  const addUserToRequestConnectedUsers = await User.findByIdAndUpdate(acceptedUserId, {
+await User.findByIdAndUpdate(requestId, {
     $push: { connections: userId },
-    $pull: { connectionRequests: userId },
+    $pull: { sentConnectionRequests: userId },
   });
 
   // addToConnectedUsers.save()

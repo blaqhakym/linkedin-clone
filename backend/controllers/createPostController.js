@@ -21,11 +21,13 @@ export const createPost = expressAsyncHandler(async (req, res) => {
 });
 
 export const fetchAllPosts = expressAsyncHandler(async (req, res) => {
-  await Post.find().exec((err, posts) => {
-    if (err) {
-      return res.json("There was an error fetching posts").status(err.status);
-    } else {
-      return res.status(200).json({ status: "OK", posts });
-    }
-  });
+  await Post.find()
+    .exec()
+    .then((posts) => {
+    return  posts.length? res.json({ posts }).status(200): res.json([]).status(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({ Error: "Error fetching posts" }).status(500);
+    });
 });

@@ -22,7 +22,7 @@ router
  
 router.route("/profile/:userId")
   .get(verifyJwt,getUser)//get a user profile
-  .patch(patchDescription);//update session user's description
+  .patch(verifyJwt, patchDescription);//update session user's description
 
 
 export default router;
